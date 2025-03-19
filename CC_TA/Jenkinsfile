@@ -4,33 +4,41 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    echo "Building PES1UG22CS524-1..."
-                }
-                sh 'g++ main/hello.cpp -o main/hello_exec'
+                sh '''
+                # Compile the C++ file
+                g++ CC_TA/main/hello.cpp -o CC_TA/main/hello_exec
+                '''
+                echo "Build completed successfully!"
             }
         }
 
         stage('Test') {
             steps {
-                script {
-                    echo "Running Tests..."
-                }
-                sh './main/hello_exec'
+                sh '''
+                # Print the output of the compiled C++ file
+                ./CC_TA/main/hello_exec
+                '''
+                echo "Test stage completed!"
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
+                echo "Deploying the build..."
+                sh '''
+                # Simulate deployment (modify as needed)
+                echo "Deployment successful!"
+                '''
             }
         }
     }
 
     post {
+        success {
+            echo "Pipeline executed successfully PES1UG22CS524!"
+        }
         failure {
-            echo 'Pipeline failed'
-            error 'Pipeline execution stopped due to failure.'
+            echo "Pipeline failed!"
         }
     }
 }
